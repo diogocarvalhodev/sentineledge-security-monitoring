@@ -1,11 +1,11 @@
 /**
- * SentinelEdge Brand Theme
+ * Sentinel Brand Theme
  * Professional dark mode security monitoring system
  */
 
 export const sentineledgeTheme = {
   // Brand Identity
-  name: 'SentinelEdge',
+  name: 'Sentinel',
   tagline: 'Local Security Monitoring System',
   version: '2.0.0',
   
@@ -126,7 +126,7 @@ export const sentineledgeTheme = {
   // Logo/Icon
   logo: {
     icon: '🛡️', // Shield emoji (replace with SVG)
-    text: 'SENTINELEDGE',
+    text: 'SENTINEL',
   },
   
   // Layout

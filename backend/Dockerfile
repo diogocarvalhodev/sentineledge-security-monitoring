@@ -1,8 +1,8 @@
-# SentinelEdge Backend - FastAPI + AI Engine
+# Sentinel Backend - FastAPI + AI Engine
 FROM python:3.11-slim
 
-LABEL maintainer="SentinelEdge Team"
-LABEL description="SentinelEdge Backend - Local Security Monitoring with AI"
+LABEL maintainer="Sentinel Team"
+LABEL description="Sentinel Backend - Local Security Monitoring with AI"
 
 # Set working directory
 WORKDIR /app

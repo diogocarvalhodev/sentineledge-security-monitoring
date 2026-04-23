@@ -34,7 +34,7 @@ export default function Layout({ children }) {
       .then(res => res.json())
       .then(data => {
         if (data.has_logo) {
-          setLogoUrl(`${API_URL}${data.path}`);
+          setLogoUrl(data.path.startsWith('/demo/') ? data.path : `${API_URL}${data.path}`);
         }
       })
       .catch(err => console.error('Erro ao carregar logo:', err));
@@ -82,7 +82,7 @@ export default function Layout({ children }) {
               {/* Title */}
               <div>
                 <h1 className="text-lg font-display font-bold tracking-wider">
-                  <span className="glow-text-cyan">SENTINELEDGE</span>
+                  <span className="glow-text-cyan">SENTINEL</span>
                 </h1>
                 <p className="text-[10px] text-slate-400 tracking-widest uppercase font-display">AI Security Hub</p>
               </div>

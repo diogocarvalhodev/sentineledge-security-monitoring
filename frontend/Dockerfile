@@ -1,4 +1,4 @@
-# SentinelEdge Frontend - React + Vite
+# Sentinel Frontend - React + Vite
 # Multi-stage build for optimized production image
 
 # Stage 1: Build
@@ -21,8 +21,8 @@ RUN npm run build
 # Stage 2: Production
 FROM nginx:alpine
 
-LABEL maintainer="SentinelEdge Team"
-LABEL description="SentinelEdge Frontend - Local Security Monitoring UI"
+LABEL maintainer="Sentinel Team"
+LABEL description="Sentinel Frontend - Local Security Monitoring UI"
 
 # Copy built files from builder
 COPY --from=builder /app/dist /usr/share/nginx/html

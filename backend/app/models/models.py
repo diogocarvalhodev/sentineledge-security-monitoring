@@ -23,7 +23,7 @@ class User(Base):
     audit_logs = relationship("SystemLog", back_populates="user", foreign_keys="SystemLog.user_id")
 
 class Zone(Base):
-    """Monitoring zones (replaces schools concept for generic deployment)"""
+    """Monitoring zones for generic deployment"""
     __tablename__ = "zones"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4, index=True)

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useToast } from './Toast';
+
+const IS_DEMO_MOCK = import.meta.env.VITE_DEMO_MOCK === 'true';
 /**
  * Hook para gerenciar notificações em tempo real via WebSocket
  * 
@@ -17,6 +19,11 @@ export function useRealtimeNotifications(userId) {
 
   useEffect(() => {
     if (!userId) return;
+
+    if (IS_DEMO_MOCK) {
+      setIsConnected(true);
+      return;
+    }
 
     const connect = () => {
       try {

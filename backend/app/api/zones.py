@@ -1,6 +1,6 @@
 """
-SentinelEdge API - Zones Management
-Generic monitoring zones (replaces school-specific terminology)
+Sentinel API - Zones Management
+Generic monitoring zones
 """
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session

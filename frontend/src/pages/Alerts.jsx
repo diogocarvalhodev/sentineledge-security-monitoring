@@ -250,6 +250,8 @@ export default function Alerts() {
           if (alert.image_path) {
             if (alert.image_path.startsWith('http')) {
               imageUrl = alert.image_path;
+            } else if (alert.image_path.startsWith('/demo/')) {
+              imageUrl = alert.image_path;
             } else {
               let path = alert.image_path.replace(/^\/+/, '');
               if (path.startsWith('uploads/')) {

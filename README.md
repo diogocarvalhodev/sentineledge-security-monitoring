@@ -1,59 +1,42 @@
-# SentinelEdge Security Monitoring - Public Demo
+# Sentinel Security Monitoring - Public Demo
 
-Production-inspired security monitoring platform designed for portfolio demonstration.
+Idioma / Language: PT-BR | EN
 
-This repository is a **demo-safe version** focused on showing engineering quality, incident workflows, and secure system design without exposing sensitive or commercially valuable implementation details.
+## PT-BR (Portuguese - Brazil)
 
-## Overview
+### Visão Geral
 
-SentinelEdge is an end-to-end monitoring system for camera-based incident detection:
+Sentinel é uma plataforma de monitoramento de segurança inspirada em produção, publicada em versão segura para portfólio.
 
-- Real-time camera monitoring and alert lifecycle
-- Incident visibility through dashboard, reports, and maps
-- Role-based access control for operations and administration
-- WebSocket notifications for near real-time operational awareness
+Objetivos principais:
 
-## Problem
+- monitoramento de câmeras em tempo real
+- ciclo de vida de alertas (criação, triagem, confirmação)
+- visibilidade operacional via dashboard, mapas e relatórios
+- notificações em tempo real por WebSocket
 
-Security and operations teams often struggle with:
+### Escopo desta versão pública
 
-- delayed incident visibility
-- fragmented monitoring tools
-- weak auditability during incident handling
-- high setup complexity for proof-of-concept environments
+Incluído:
 
-## Solution
+- autenticação JWT com controle por papéis
+- gerenciamento de zonas e câmeras
+- fluxo de alertas com analíticos básicos
+- endpoint de saúde e operação via Docker Compose
 
-SentinelEdge provides a unified platform where events are detected, stored, visualized, and acknowledged in one operational workflow.
+Simplificado/mockado:
 
-The demo version keeps the architecture realistic while making local execution simple and safe for public sharing.
+- integrações externas podem operar em modo mock
+- fontes locais de vídeo podem ser habilitadas para demo
+- motor de IA pode ficar desabilitado por padrão para setup leve
 
-## Demo Scope (Public Version)
+Não exposto:
 
-This repository intentionally includes only portfolio-safe capabilities.
+- lógica comercial proprietária
+- segredos e detalhes de infraestrutura real de clientes
+- hardening completo de ambiente produtivo
 
-### Included
-
-- JWT authentication and role-based access
-- Camera management and stream testing
-- Alert creation, listing, acknowledgment, and analytics
-- Dashboard metrics and operational health endpoint
-- WebSocket-based live updates
-- Frontend pages for Dashboard, Cameras, Alerts, Reports, Map, Settings
-
-### Simplified or Mocked
-
-- External integrations (for example, Telegram test endpoint) can run in mock mode
-- Local/mock video sources are allowed in demo mode to avoid dependence on real RTSP infrastructure
-- AI engine can be disabled by default for lightweight local setup
-
-### Not Exposed in This Demo
-
-- Commercial tuning logic and proprietary operational heuristics
-- Real customer infrastructure details and secrets
-- Production deployment hardening specifics
-
-## Architecture (Based on Current Code)
+### Arquitetura
 
 ```text
 Frontend (React + Vite + Zustand)
@@ -67,172 +50,256 @@ Frontend (React + Vite + Zustand)
                      Optional AI Detector (YOLO/OpenCV)
 ```
 
-### Backend highlights
-
-- FastAPI app entrypoint and router orchestration in `backend/app/main.py`
-- Domain APIs under `backend/app/api`
-- Core services and security in `backend/app/core`
-- SQLAlchemy models in `backend/app/models/models.py`
-
-### Frontend highlights
-
-- Route composition in `frontend/src/App.jsx`
-- Global state and API/WebSocket client in `frontend/src/store/useStore.js`
-- Layout/navigation and realtime status in `frontend/src/components/Layout.jsx`
-
-## Tech Stack
+### Stack Técnica
 
 - Backend: Python, FastAPI, SQLAlchemy, Pydantic
-- Data: PostgreSQL, Redis
+- Dados: PostgreSQL, Redis
 - Realtime: WebSocket
-- Detection pipeline (optional): OpenCV, PyTorch, Ultralytics YOLO
+- IA (opcional): OpenCV, PyTorch, Ultralytics YOLO
 - Frontend: React, Vite, Zustand, Tailwind CSS
 - Containers: Docker, Docker Compose
 
-## Curated Features For Recruiter Impact
+### Rodando localmente
 
-- Monitoring: live camera status, dashboard KPIs, health telemetry
-- Automation: alert creation flow, detector lifecycle, scheduled cleanup endpoints
-- Incident handling: alert queue, acknowledgment flow, review metadata
-- Reliability: health checks, resilient stream reconnect behavior, environment-driven config
+1. Pré-requisitos
 
-## Security Perspective
+- Docker e Docker Compose
+- Node.js 20+ (apenas se rodar frontend fora do Docker)
+- Python 3.11+ (apenas se rodar backend fora do Docker)
 
-This project demonstrates practical secure-by-design decisions:
-
-- JWT-based authentication and role-restricted endpoints
-- Admin-only controls for sensitive actions
-- Configurable CORS and environment-based secrets
-- Demo-safe integration controls to prevent accidental external calls
-- Separation of demo behavior and production-like behavior via feature flags
-
-### Demo-safe controls added
-
-- `DEMO_MODE=true`
-- `ALLOW_LOCAL_VIDEO_SOURCES=true`
-- `ENABLE_EXTERNAL_INTEGRATIONS=false`
-
-## Run Locally
-
-## 1. Prerequisites
-
-- Docker + Docker Compose
-- Node.js 20+ (only if running frontend outside Docker)
-- Python 3.11+ (only if running backend outside Docker)
-
-## 2. Configure environment
+2. Configurar ambiente
 
 ```bash
 cp .env.example .env
 ```
 
-Important defaults in demo mode:
-
-- AI engine disabled for lightweight startup
-- external integrations mocked
-- local video sources allowed
-
-## 3. Start with Docker Compose
+3. Subir stack
 
 ```bash
 docker compose up --build
 ```
 
-Services:
+4. Acessos
 
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
+- API: http://localhost:8000
+- Docs: http://localhost:8000/docs
 
-## 4. Login
+5. Credenciais demo
 
-Default demo credentials:
+- usuário: `admin`
+- senha: `admin`
 
-- username: `admin`
-- password: `admin`
-
-## 5. Optional smoke test
+6. Smoke test opcional
 
 ```bash
 python test_all_endpoints.py
 ```
 
-## Demo Walkthrough (Suggested)
+### Deploy frontend-only no Vercel (modo mock)
 
-1. Login as admin
-2. Create a zone and camera
-3. Start camera monitoring
-4. Open dashboard and observe live stats
-5. Trigger or create an alert and acknowledge it
-6. Validate realtime updates (WebSocket)
-7. Show health endpoint and discuss reliability controls
+Objetivo: publicar uma demo visual sem backend, usando dados fictícios e imagens locais.
 
-## Suggested Screenshot Set
+1. Build e diretório de saída
 
-1. Login page
-2. Dashboard with KPIs and recent alerts
-3. Camera management and stream snapshot
-4. Alerts queue and acknowledgment flow
-5. Reports page (charts/filters)
-6. Map view with monitored zones
-7. Settings page with security and integration controls
+- Build Command: `npm run build`
+- Output Directory: `dist`
 
-## Repository Structure
+2. Variáveis de ambiente (Vercel)
+
+- `VITE_DEMO_MOCK=true`
+- `VITE_API_URL` opcional no modo mock
+
+3. Comportamento no modo mock
+
+- as chamadas REST são interceptadas no frontend
+- WebSocket em localhost é desativado automaticamente
+- dados seed de demo são carregados em memória
+- imagens demo são servidas de `frontend/public/demo`
+
+4. Acesso na demo
+
+- login aceitando qualquer usuário/senha (sugestão: `admin` / `admin`)
+
+### Estrutura do repositório
 
 ```text
 backend/
   app/
-    api/          # REST endpoints
-    core/         # security, config, detector, notifications
-    models/       # SQLAlchemy models
-    schemas/      # request/response schemas
+    api/
+    core/
+    models/
+    schemas/
 frontend/
   src/
-    components/   # UI and realtime widgets
-    pages/        # route-level views
-    store/        # Zustand global state
+    components/
+    pages/
+    store/
 database/
   init.sql
 docker-compose.yml
 ```
 
-## Recommended Next Improvements
+### Materiais de operação
 
-- split API routers by bounded context package naming (for example, `incident`, `monitoring`, `admin`)
-- move detector-specific code behind a service interface for easier mock injection
-- add a seeded demo dataset command (zones, cameras, alerts)
-- expand CI pipeline with dependency scanning and integration tests
-- add postmortem template and release checklist markdown
+- CI: `.github/workflows/ci.yml`
+- Threat model: `docs/threat-model.md`
+- Runbook de incidente: `docs/runbooks/incident-response.md`
+- Licença: `LICENSE`
 
-## Engineering Ops Assets
+### Uso
 
-- CI workflow: `.github/workflows/ci.yml`
+Este repositório é para demonstração técnica e portfólio.
+Não use em produção sem hardening, threat modeling e revisão de segurança.
+
+---
+
+## EN (English)
+
+### Overview
+
+Sentinel is a production-inspired security monitoring platform published as a portfolio-safe public demo.
+
+Core goals:
+
+- real-time camera monitoring
+- full alert lifecycle (create, triage, confirm)
+- operational visibility through dashboards, maps, and reports
+- real-time updates over WebSocket
+
+### Scope of this public version
+
+Included:
+
+- JWT authentication with role-based access
+- zone and camera management
+- alert pipeline with basic analytics
+- health endpoint and Docker Compose-based operation
+
+Simplified/mocked:
+
+- external integrations can run in mock mode
+- local video sources can be enabled for demos
+- AI engine can be disabled by default for lightweight setup
+
+Not exposed:
+
+- proprietary commercial logic
+- customer secrets and real infrastructure details
+- full production hardening specifics
+
+### Architecture
+
+```text
+Frontend (React + Vite + Zustand)
+  -> REST + JWT -> FastAPI Backend
+  -> WebSocket ----^        |
+                            |
+                     PostgreSQL (system of record)
+                            |
+                         Redis (realtime support)
+                            |
+                     Optional AI Detector (YOLO/OpenCV)
+```
+
+### Tech stack
+
+- Backend: Python, FastAPI, SQLAlchemy, Pydantic
+- Data: PostgreSQL, Redis
+- Realtime: WebSocket
+- AI (optional): OpenCV, PyTorch, Ultralytics YOLO
+- Frontend: React, Vite, Zustand, Tailwind CSS
+- Containers: Docker, Docker Compose
+
+### Running locally
+
+1. Prerequisites
+
+- Docker and Docker Compose
+- Node.js 20+ (only if running frontend outside Docker)
+- Python 3.11+ (only if running backend outside Docker)
+
+2. Configure environment
+
+```bash
+cp .env.example .env
+```
+
+3. Start stack
+
+```bash
+docker compose up --build
+```
+
+4. Endpoints
+
+- Frontend: http://localhost:3000
+- API: http://localhost:8000
+- Docs: http://localhost:8000/docs
+
+5. Demo credentials
+
+- username: `admin`
+- password: `admin`
+
+6. Optional smoke test
+
+```bash
+python test_all_endpoints.py
+```
+
+### Frontend-only Vercel deploy (mock mode)
+
+Goal: publish a visual demo with no backend, using seeded fake data and local images.
+
+1. Build and output
+
+- Build Command: `npm run build`
+- Output Directory: `dist`
+
+2. Environment variables (Vercel)
+
+- `VITE_DEMO_MOCK=true`
+- `VITE_API_URL` is optional in mock mode
+
+3. Mock mode behavior
+
+- frontend intercepts REST calls
+- localhost WebSocket is automatically disabled
+- in-memory seeded demo data is loaded
+- demo images are served from `frontend/public/demo`
+
+4. Demo access
+
+- login accepts any username/password (suggestion: `admin` / `admin`)
+
+### Repository structure
+
+```text
+backend/
+  app/
+    api/
+    core/
+    models/
+    schemas/
+frontend/
+  src/
+    components/
+    pages/
+    store/
+database/
+  init.sql
+docker-compose.yml
+```
+
+### Engineering ops assets
+
+- CI: `.github/workflows/ci.yml`
 - Threat model: `docs/threat-model.md`
 - Incident runbook: `docs/runbooks/incident-response.md`
 - License: `LICENSE`
 
-## Recruiter View (US Market)
+### Usage
 
-### Current perception (before demo curation)
-
-- Strong technical depth but mixed product narrative
-- Some hardcoded/local assumptions reduce portability
-- External integration behavior not clearly controlled for public demo
-
-### Perception after this demo curation
-
-- Clear ownership of backend + platform concerns
-- Better signal of SRE + Security mindset (reliability, observability, incident workflows)
-- More interview-ready because architecture and business tradeoffs are explicit
-
-### What helps this stand out in interviews
-
-- Explain design choices using risk and reliability language
-- Show one live incident flow end-to-end in under 5 minutes
-- Discuss how demo flags map to production controls
-- Highlight what was intentionally hidden to protect commercial IP
-
-## License and Usage
-
-This repository is intended for portfolio demonstration and technical evaluation.
-Do not use it in production as-is without hardening, threat modeling, and security review.
+This repository is intended for technical demonstration and portfolio review.
+Do not use it in production without proper hardening, threat modeling, and security review.

@@ -1,4 +1,4 @@
-# SentinelEdge - Security System
+# Sentinel - Security System
 
 # Environment variables
 .env
@@ -89,6 +89,9 @@ Desktop.ini
 
 # Showcase assets/scripts (local only)
 showcase/
+
+# Local deployment notes
+VERCEL_DEPLOY_LOCAL.md
 
 # Backup files
 *.bak

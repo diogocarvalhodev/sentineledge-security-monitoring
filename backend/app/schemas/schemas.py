@@ -43,35 +43,6 @@ class UserResponse(UserBase):
     class Config:
         from_attributes = True
 
-# School Schemas
-class SchoolBase(BaseModel):
-    name: str
-    address: str
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
-    phone: Optional[str] = None
-    notes: Optional[str] = None
-
-class SchoolCreate(SchoolBase):
-    pass
-
-class SchoolUpdate(BaseModel):
-    name: Optional[str] = None
-    address: Optional[str] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
-    phone: Optional[str] = None
-    notes: Optional[str] = None
-
-class SchoolResponse(SchoolBase):
-    id: UUID
-    created_at: datetime
-    updated_at: datetime
-    camera_count: Optional[int] = 0
-    
-    class Config:
-        from_attributes = True
-
 # Zone Schemas
 class ZoneBase(BaseModel):
     name: str
@@ -105,7 +76,7 @@ class ZoneResponse(ZoneBase):
 class CameraBase(BaseModel):
     name: str
     location: str
-    zone_id: Optional[UUID] = None  # Migration: school_id → zone_id
+    zone_id: Optional[UUID] = None
     ip: str
     rtsp_user: str
     rtsp_password: str
@@ -120,12 +91,9 @@ class CameraBase(BaseModel):
     critical_hours_end: str = "06:00"
     monitor_weekends: bool = True
     enabled: bool = True
-    # Deprecated fields (backward compatibility)
-    school_id: Optional[UUID] = None  # Deprecated: use zone_id
     address: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
-    school_name: Optional[str] = None
 
 class CameraCreate(CameraBase):
     pass
@@ -147,12 +115,9 @@ class CameraUpdate(BaseModel):
     critical_hours_end: Optional[str] = None
     monitor_weekends: Optional[bool] = None
     enabled: Optional[bool] = None
-    # Deprecated fields
-    school_id: Optional[UUID] = None
     address: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
-    school_name: Optional[str] = None
 
 class CameraResponse(BaseModel):
     id: UUID

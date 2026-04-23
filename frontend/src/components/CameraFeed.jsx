@@ -2,6 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera, RefreshCw, AlertCircle, Play, Pause, Settings, Maximize2 } from 'lucide-react';
 
 const API_URL = 'http://localhost:8000';
+const IS_DEMO_MOCK = import.meta.env.VITE_DEMO_MOCK === 'true';
+
+const getMockCameraImage = (camera) => {
+  const raw = String(camera?.id || '1').replace(/\D/g, '');
+  const idx = ((Number(raw || 1) - 1) % 3) + 1;
+  return `/demo/camera-${idx}.svg`;
+};
 
 export default function CameraFeed({ 
   camera, 
@@ -23,6 +30,9 @@ export default function CameraFeed({
   // URL do stream ou snapshot
   const getVideoUrl = () => {
     if (!camera?.id) return null;
+    if (IS_DEMO_MOCK) {
+      return `${getMockCameraImage(camera)}?t=${Date.now()}`;
+    }
     const token = localStorage.getItem('token');
     if (useStream && isPlaying) {
       // Retornar URL do stream MJPEG com token no header não funciona em img, então adicionar na query
@@ -34,6 +44,14 @@ export default function CameraFeed({
   // Fetch snapshot from camera (usado quando stream não está disponível)
   const fetchSnapshot = async () => {
     if (!camera?.id) return;
+
+    if (IS_DEMO_MOCK) {
+      setSnapshot(`${getMockCameraImage(camera)}?t=${Date.now()}`);
+      setError(null);
+      setLastUpdate(new Date());
+      setLoading(false);
+      return;
+    }
     
     try {
       const token = localStorage.getItem('token');
@@ -55,7 +73,7 @@ export default function CameraFeed({
       const imageUrl = URL.createObjectURL(blob);
       
       // Clean up previous snapshot
-      if (snapshot) {
+      if (snapshot && snapshot.startsWith('blob:')) {
         URL.revokeObjectURL(snapshot);
       }
       
@@ -109,7 +127,9 @@ export default function CameraFeed({
   useEffect(() => {
     return () => {
       if (snapshot) {
+        if (snapshot.startsWith('blob:')) {
         URL.revokeObjectURL(snapshot);
+        }
       }
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

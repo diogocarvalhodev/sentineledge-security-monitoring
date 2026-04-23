@@ -69,7 +69,7 @@ export function OSMPlacesAutocomplete({
           headers: {
             'Accept-Language': 'pt-BR,pt;q=0.9',
             // User-Agent é importante para OSM
-            'User-Agent': 'SistemaSegurancaEscolar/1.0'
+            'User-Agent': 'SentinelZones/1.0'
           }
         }
       );
@@ -268,7 +268,7 @@ export function useOSMGeocoding() {
         {
           headers: {
             'Accept-Language': 'pt-BR,pt;q=0.9',
-            'User-Agent': 'SistemaSegurancaEscolar/1.0'
+            'User-Agent': 'SentinelZones/1.0'
           }
         }
       );

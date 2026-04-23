@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#0f172a"/>
+  <rect x="0" y="0" width="800" height="60" fill="#ef4444"/>
+  <text x="24" y="39" fill="white" font-size="26" font-family="monospace">ALERT HIGH - GATE A</text>
+  <rect x="310" y="90" width="170" height="280" fill="none" stroke="#22d3ee" stroke-width="5"/>
+  <text x="313" y="83" fill="#22d3ee" font-size="20" font-family="monospace">Person 93%</text>
+</svg>

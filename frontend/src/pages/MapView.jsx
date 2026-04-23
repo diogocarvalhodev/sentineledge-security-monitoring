@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Camera, AlertTriangle, CheckCircle, XCircle, MapPin, School, Building2 } from 'lucide-react';
+import { Camera, AlertTriangle, CheckCircle, XCircle, MapPin, Building2 } from 'lucide-react';
 
 const API_URL = 'http://localhost:8000';
 
@@ -15,8 +15,8 @@ Icon.Default.mergeOptions({
 });
 
 // Ícones customizados
-const createCustomIcon = (color, isSchool = false) => {
-  const innerShape = isSchool ? 
+const createCustomIcon = (color, isZone = false) => {
+  const innerShape = isZone ? 
     `<rect x="8" y="6" width="8" height="6" fill="#fff"/>
      <polygon points="12,3 8,6 16,6" fill="#fff"/>` :
     `<circle fill="#fff" cx="12" cy="8" r="3"/>`;
@@ -38,7 +38,7 @@ const cameraGreenIcon = createCustomIcon('#10b981', false);
 const cameraYellowIcon = createCustomIcon('#f59e0b', false);
 const cameraRedIcon = createCustomIcon('#ef4444', false);
 const cameraGrayIcon = createCustomIcon('#6b7280', false);
-const schoolIcon = createCustomIcon('#3b82f6', true);
+const zoneIcon = createCustomIcon('#3b82f6', true);
 
 function MapView() {
   const [cameras, setCameras] = useState([]);
@@ -262,7 +262,7 @@ function MapView() {
               <Marker
                 key={`zone-${zone.id}`}
                 position={[zone.latitude, zone.longitude]}
-                icon={schoolIcon}
+                icon={zoneIcon}
               >
                 <Popup>
                   <div className="p-2 min-w-[250px] bg-slate-900 border border-slate-700">

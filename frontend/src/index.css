@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 /* ============================================
-   SENTINELEDGE - AI SECURITY OPERATIONS CENTER
-   Design System v2.0
-   ============================================ */
+  SENTINEL - AI SECURITY OPERATIONS CENTER
+  Design System v2.0
+  ============================================ */
 
 :root {
   /* Core Colors - Dark Navy Theme */
@@ -88,7 +88,7 @@
 
 @layer components {
   /* ============================================
-     SENTINELEDGE COMPONENTS
+  SENTINEL COMPONENTS
      ============================================ */
   
   /* Cyber Card with Glow */

@@ -30,7 +30,7 @@ CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_is_active ON users(is_active);
 
 -- ============================================
--- ZONES (formerly schools)
+-- ZONES
 -- ============================================
 
 CREATE TABLE IF NOT EXISTS zones (
@@ -349,7 +349,7 @@ ALTER TABLE system_logs SET (autovacuum_vacuum_scale_factor = 0.05);
 -- ============================================
 
 COMMENT ON TABLE users IS 'System users with role-based access control';
-COMMENT ON TABLE zones IS 'Monitoring zones (replaces schools concept)';
+COMMENT ON TABLE zones IS 'Monitoring zones';
 COMMENT ON TABLE cameras IS 'RTSP cameras for monitoring';
 COMMENT ON TABLE detection_classes IS 'AI detection classes (COCO dataset)';
 COMMENT ON TABLE alerts IS 'Detection events from AI engine';

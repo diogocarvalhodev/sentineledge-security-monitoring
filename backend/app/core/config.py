@@ -3,7 +3,7 @@ from typing import Optional, List, Union
 
 class Settings(BaseSettings):
     # Application
-    APP_NAME: str = "SentinelEdge"
+    APP_NAME: str = "Sentinel"
     APP_VERSION: str = "2.0.0"
     DEBUG: bool = False
     DEMO_MODE: bool = True

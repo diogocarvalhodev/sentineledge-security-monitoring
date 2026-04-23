@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { Building2 } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export default function Login() {
   const navigate = useNavigate();
   const { login, loading, error } = useStore();
@@ -12,11 +14,11 @@ export default function Login() {
 
   // Buscar logo do sistema
   useEffect(() => {
-    fetch('http://localhost:8000/system/logo')
+    fetch(`${API_URL}/system/logo`)
       .then(res => res.json())
       .then(data => {
         if (data.has_logo) {
-          setLogoUrl(`http://localhost:8000${data.path}`);
+          setLogoUrl(data.path.startsWith('/demo/') ? data.path : `${API_URL}${data.path}`);
         }
       })
       .catch(err => console.error('Erro ao carregar logo:', err));
@@ -67,7 +69,7 @@ export default function Login() {
             </div>
             
             <h1 className="text-4xl font-display font-bold tracking-wider mb-2">
-              <span className="glow-text-cyan">SENTINELEDGE</span>
+              <span className="glow-text-cyan">SENTINEL</span>
             </h1>
             <p className="text-slate-400 text-sm tracking-widest uppercase font-display">
               AI Security Operations

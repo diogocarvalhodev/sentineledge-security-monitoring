@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const IS_DEMO_MOCK = import.meta.env.VITE_DEMO_MOCK === 'true';
 
 const getWebSocketUrl = (token) => {
   const api = new URL(API_URL);
@@ -157,6 +158,11 @@ export const useStore = create((set, get) => ({
   },
   
   connectWebSocket: () => {
+    if (IS_DEMO_MOCK) {
+      set({ wsConnected: true });
+      return;
+    }
+
     const token = get().token;
     const wsUrl = getWebSocketUrl(token);
 

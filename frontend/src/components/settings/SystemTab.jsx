@@ -391,7 +391,7 @@ export default function SystemTab() {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between py-2 border-b border-slate-700/50">
             <span className="text-slate-400 uppercase tracking-wide font-display font-semibold">Nome:</span>
-            <span className="font-semibold text-slate-200">SentinelEdge Security System</span>
+            <span className="font-semibold text-slate-200">Sentinel Security System</span>
           </div>
           <div className="flex justify-between py-2 border-b border-slate-700/50">
             <span className="text-slate-400 uppercase tracking-wide font-display font-semibold">Organização:</span>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#111827"/>
+  <rect x="0" y="0" width="800" height="60" fill="#fb7185"/>
+  <text x="24" y="39" fill="white" font-size="26" font-family="monospace">ALERT MEDIUM - DOCK 03</text>
+  <rect x="335" y="100" width="160" height="280" fill="none" stroke="#fda4af" stroke-width="5"/>
+  <text x="340" y="92" fill="#fda4af" font-size="20" font-family="monospace">Perimeter 79%</text>
+</svg>

@@ -1,5 +1,5 @@
 """
-SentinelEdge AI Engine - YOLOv8n Object Detection (2026 Edition)
+Sentinel AI Engine - YOLOv8n Object Detection (2026 Edition)
 Single shared detector instance for all cameras - ultra efficient
 """
 import cv2

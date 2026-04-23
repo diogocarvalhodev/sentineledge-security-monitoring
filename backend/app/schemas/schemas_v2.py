@@ -1,5 +1,5 @@
 """
-SentinelEdge API Schemas (Pydantic V2)
+Sentinel API Schemas (Pydantic V2)
 Updated for PostgreSQL with UUID support
 """
 from pydantic import BaseModel, Field, field_validator, ConfigDict
@@ -39,7 +39,7 @@ class UserResponse(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
 # ============================================
-# ZONE SCHEMAS (replaces School)
+# ZONE SCHEMAS
 # ============================================
 
 class ZoneBase(BaseModel):
@@ -247,18 +247,3 @@ class ZoneStats(BaseModel):
     alerts_24h: int
     pending_alerts: int
 
-# ============================================
-# LEGACY SCHEMAS (backward compatibility)
-# ============================================
-
-class SchoolCreate(ZoneCreate):
-    """Deprecated: Use ZoneCreate instead"""
-    pass
-
-class SchoolUpdate(ZoneUpdate):
-    """Deprecated: Use ZoneUpdate instead"""
-    pass
-
-class SchoolResponse(ZoneResponse):
-    """Deprecated: Use ZoneResponse instead"""
-    pass
