@@ -1,23 +1,36 @@
 SentinelEdge Portfolio License
-================================
+==============================
+
+SPDX-License-Identifier: LicenseRef-SentinelEdge-Portfolio-1.0
 
 Copyright (c) 2026, Diogo (SentinelEdge).
 
-All rights reserved. This repository is published for technical review and
-portfolio demonstration only.
+Contact: diogocarvalhocrf@outlook.com
+
+All rights reserved.
+
+This repository is provided for technical review and portfolio demonstration
+purposes only. No permission is granted to use this code beyond viewing it in
+this repository, unless prior written authorization is provided by the author.
 
 Without prior written permission from the author, you may not:
-- copy, reproduce, or redistribute this code or substantial parts of it;
-- modify, adapt, or create derivative works;
+- copy, reproduce, or redistribute this code, in whole or in part;
+- modify, adapt, translate, or create derivative works;
 - use this code in your own projects, products, or services;
 - use this code for commercial purposes;
 - sublicense, sell, or otherwise transfer this code.
 
-The software is provided "as is", without warranty of any kind, express or
-implied, including but not limited to the warranties of merchantability,
-fitness for a particular purpose, and noninfringement.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
 
-In no event shall the authors or copyright holders be liable for any claim,
-damages, or other liability, whether in an action of contract, tort, or
-otherwise, arising from, out of, or in connection with the software or the use
-or other dealings in the software.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR
+OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+
+Informative translation:
+- Portuguese (Brazil): LICENSE.pt-BR.md
+
+In case of conflict or ambiguity between versions, this English version
+prevails.

@@ -93,6 +93,9 @@ showcase/
 # Local deployment notes
 VERCEL_DEPLOY_LOCAL.md
 
+# Roteiro de apresentação para entrevista técnica (uso pessoal)
+docs/roteiro-pitch-tecnico-5-minutos.md
+
 # Backup files
 *.bak
 *.backup

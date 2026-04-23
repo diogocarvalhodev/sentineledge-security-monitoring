@@ -1,127 +1,215 @@
-# Sentinel Security Monitoring - Public Demo
+# SentinelEdge Security Monitoring
 
-Idioma / Language: PT-BR | EN
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=0B1021)
+![Vite](https://img.shields.io/badge/Vite-Build-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Data-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-Realtime-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-## PT-BR (Portuguese - Brazil)
+Idioma / Language: PT-BR | EN ([README.en.md](README.en.md))
 
-### Visão Geral
+Demo pública de engenharia para monitoramento de segurança em tempo real, com posicionamento técnico para entrevistas backend/full stack e revisão arquitetural.
 
-Sentinel é uma plataforma de monitoramento de segurança inspirada em produção, publicada em versão segura para portfólio.
+Demo pública ao vivo: https://sentineledge-security-monitoring.vercel.app/
 
-Objetivos principais:
+## Como explorar em 2 minutos
 
-- monitoramento de câmeras em tempo real
-- ciclo de vida de alertas (criação, triagem, confirmação)
-- visibilidade operacional via dashboard, mapas e relatórios
-- notificações em tempo real por WebSocket
+1. Acesse a demo pública e faça login no modo demonstração.
+2. Navegue por Dashboard, Alerts, Cameras e Map para validar o fluxo operacional.
+3. Abra Settings para observar controles administrativos e configuração de integrações em modo seguro de demo.
 
-### Escopo desta versão pública
+## Contexto do problema
 
-Incluído:
+Soluções de segurança física geralmente sofrem com três pontos críticos:
 
-- autenticação JWT com controle por papéis
-- gerenciamento de zonas e câmeras
-- fluxo de alertas com analíticos básicos
-- endpoint de saúde e operação via Docker Compose
+- baixa visibilidade operacional para triagem de eventos em tempo real;
+- acoplamento excessivo entre captura de vídeo, lógica de alerta e interfaces de operação;
+- pouca disciplina de segurança e operação em ambientes de demonstração pública.
 
-Simplificado/mockado:
+O SentinelEdge foi estruturado para atacar esse cenário com uma abordagem de engenharia orientada a operações:
 
-- integrações externas podem operar em modo mock
-- fontes locais de vídeo podem ser habilitadas para demo
-- motor de IA pode ficar desabilitado por padrão para setup leve
+- centraliza o ciclo de vida de alertas (detecção, triagem e confirmação);
+- mantém rastreabilidade operacional por dashboard, mapa e relatórios;
+- separa claramente escopo de demo pública e requisitos de produção real.
 
-Não exposto:
+## Escopo da demo pública
 
-- lógica comercial proprietária
-- segredos e detalhes de infraestrutura real de clientes
-- hardening completo de ambiente produtivo
+### O que a demo entrega hoje
 
-### Arquitetura
+- autenticação JWT com perfis e proteção de rotas sensíveis;
+- gestão de câmeras, zonas, alertas e configurações do sistema;
+- canal de atualizações em tempo real via WebSocket;
+- dashboard operacional e visualização de evidências;
+- execução local padronizada com Docker Compose;
+- modo de demonstração frontend-only com mock para portfólio.
+
+### O que fica propositalmente fora da demo
+
+- segredos e integrações de clientes reais;
+- políticas completas de hardening de produção;
+- detalhes proprietários de negócio.
+
+## Arquitetura e fluxo de dados
+
+### Visão de alto nível
 
 ```text
-Frontend (React + Vite + Zustand)
-  -> REST + JWT -> FastAPI Backend
-  -> WebSocket ----^        |
-                            |
-                     PostgreSQL (system of record)
-                            |
-                         Redis (realtime support)
-                            |
-                     Optional AI Detector (YOLO/OpenCV)
+Frontend React (Vite + Zustand)
+  -> HTTP/REST com JWT -> Backend FastAPI
+  -> WebSocket ----------^         |
+                                   |
+                         PostgreSQL (fonte de verdade)
+                                   |
+                        Redis (suporte a realtime)
+                                   |
+            Detector opcional (YOLO/OpenCV para cenários de demo)
 ```
 
-### Stack Técnica
+### Fluxo operacional principal
+
+1. O operador autentica no frontend e recebe token JWT.
+2. O frontend consome APIs protegidas para leitura e ação operacional.
+3. O backend persiste entidades em PostgreSQL (usuários, câmeras, zonas e alertas).
+4. Eventos operacionais são distribuídos para o frontend por WebSocket.
+5. Em cenários com detector habilitado, evidências de alerta são salvas em uploads e indexadas para consulta.
+
+### Stack técnica
 
 - Backend: Python, FastAPI, SQLAlchemy, Pydantic
+- Frontend: React, Vite, Zustand, Tailwind CSS
 - Dados: PostgreSQL, Redis
 - Realtime: WebSocket
-- IA (opcional): OpenCV, PyTorch, Ultralytics YOLO
-- Frontend: React, Vite, Zustand, Tailwind CSS
-- Containers: Docker, Docker Compose
+- IA opcional: PyTorch, Ultralytics YOLO, OpenCV
+- Plataforma local: Docker e Docker Compose
 
-### Rodando localmente
+## Segurança aplicada
 
-1. Pré-requisitos
+A demo foi desenhada para ser pública sem mascarar engenharia mínima de segurança:
 
-- Docker e Docker Compose
-- Node.js 20+ (apenas se rodar frontend fora do Docker)
-- Python 3.11+ (apenas se rodar backend fora do Docker)
+- autenticação baseada em JWT para rotas protegidas;
+- hash de senha com bcrypt;
+- autorização por papel para operações administrativas;
+- controle de CORS via configuração;
+- bootstrap administrativo controlado por variáveis de ambiente;
+- separação explícita entre modo demo e integrações externas.
 
-2. Configurar ambiente
+Material de apoio de segurança:
+
+- threat model: docs/threat-model.md
+- runbook de resposta a incidente: docs/runbooks/incident-response.md
+
+## Operação e runbook
+
+### Subida rápida local
+
+1. Copie as variáveis de ambiente:
 
 ```bash
 cp .env.example .env
 ```
 
-3. Subir stack
+2. Suba a stack:
 
 ```bash
 docker compose up --build
 ```
 
-4. Acessos
+3. Endpoints principais:
 
-- Frontend: http://localhost:3000
+- frontend: http://localhost:3000
 - API: http://localhost:8000
-- Docs: http://localhost:8000/docs
+- documentação da API: http://localhost:8000/docs
 
-5. Credenciais demo
+4. Credencial padrão de demonstração:
 
-- usuário: `admin`
-- senha: `admin`
+- usuário: admin
+- senha: admin
 
-6. Smoke test opcional
+### Validação operacional da demo
+
+Executar smoke test de endpoints:
 
 ```bash
 python test_all_endpoints.py
 ```
 
-### Deploy frontend-only no Vercel (modo mock)
+### Referência de resposta a incidente
 
-Objetivo: publicar uma demo visual sem backend, usando dados fictícios e imagens locais.
+O procedimento de triagem e recuperação está em docs/runbooks/incident-response.md e cobre:
 
-1. Build e diretório de saída
+- classificação de severidade;
+- triagem inicial dos primeiros 10 minutos;
+- ações de recuperação em Docker;
+- checklist pós-incidente.
 
-- Build Command: `npm run build`
-- Output Directory: `dist`
+## Prova de maturidade técnica
 
-2. Variáveis de ambiente (Vercel)
+### Threat model
 
-- `VITE_DEMO_MOCK=true`
-- `VITE_API_URL` opcional no modo mock
+- arquivo: docs/threat-model.md
+- cobre ativos críticos, fronteiras de confiança, ameaças principais, mitigações atuais e riscos residuais.
 
-3. Comportamento no modo mock
+### Runbook
 
-- as chamadas REST são interceptadas no frontend
-- WebSocket em localhost é desativado automaticamente
-- dados seed de demo são carregados em memória
-- imagens demo são servidas de `frontend/public/demo`
+- arquivo: docs/runbooks/incident-response.md
+- define processo de resposta com foco em disponibilidade e recuperação rápida da demo.
 
-4. Acesso na demo
+### Pipeline CI
 
-- login aceitando qualquer usuário/senha (sugestão: `admin` / `admin`)
+- arquivo: .github/workflows/ci.yml
+- validações atuais:
+  - compilação de fontes Python com compileall;
+  - validação sintática do Docker Compose;
+  - build do frontend com Vite.
 
-### Estrutura do repositório
+### Testes existentes
+
+- smoke test HTTP ponta a ponta: test_all_endpoints.py
+- verificação de build no CI para frontend;
+- validação sintática do backend no CI.
+
+### Testes faltantes para elevar cobertura
+
+- testes unitários no backend (serviços, regras e camada de segurança);
+- testes de integração com banco e autenticação em pipeline isolado;
+- testes E2E do frontend com fluxo real de login e triagem;
+- testes de carga e resiliência para WebSocket e ingestão de eventos.
+
+## Do demo para produção
+
+### O que já está robusto
+
+- arquitetura em camadas com responsabilidades separadas;
+- superfície funcional consistente para operação de segurança;
+- baseline de segurança de aplicação (autenticação e autorização);
+- documentação operacional e de risco já versionada;
+- pipeline CI ativo para prevenir regressões básicas.
+
+### O que falta para hardening real
+
+- gestão de segredos com cofre dedicado e rotação formal;
+- estratégia de refresh token, revogação e expiração curta de sessão;
+- trilha de auditoria imutável para ações críticas;
+- rate limiting e proteção contra força bruta no login;
+- observabilidade completa (métricas, tracing e alertas em produção);
+- SAST, DAST e varredura de dependências como gates obrigatórios no CI;
+- política de backup e recuperação testada periodicamente;
+- segmentação de rede e postura zero trust para serviços internos.
+
+## Demo frontend-only no Vercel
+
+Para apresentação visual sem backend:
+
+- build command: npm run build
+- output directory: dist
+- variável recomendada: VITE_DEMO_MOCK=true
+
+Nesse modo, o frontend usa dados simulados para navegação de portfólio.
+
+## Estrutura do repositório
 
 ```text
 backend/
@@ -137,169 +225,20 @@ frontend/
     store/
 database/
   init.sql
-docker-compose.yml
+docs/
+  threat-model.md
+  runbooks/
+    incident-response.md
+.github/workflows/
+  ci.yml
 ```
 
-### Materiais de operação
+## Aviso de uso
 
-- CI: `.github/workflows/ci.yml`
-- Threat model: `docs/threat-model.md`
-- Runbook de incidente: `docs/runbooks/incident-response.md`
-- Licença: `LICENSE`
+Este repositório representa uma demo pública de engenharia.
+Antes de uso em produção real, execute o plano de hardening descrito neste documento e realize revisão formal de segurança, operação e conformidade.
 
-### Uso
+Licença:
 
-Este repositório é para demonstração técnica e portfólio.
-Não use em produção sem hardening, threat modeling e revisão de segurança.
-
----
-
-## EN (English)
-
-### Overview
-
-Sentinel is a production-inspired security monitoring platform published as a portfolio-safe public demo.
-
-Core goals:
-
-- real-time camera monitoring
-- full alert lifecycle (create, triage, confirm)
-- operational visibility through dashboards, maps, and reports
-- real-time updates over WebSocket
-
-### Scope of this public version
-
-Included:
-
-- JWT authentication with role-based access
-- zone and camera management
-- alert pipeline with basic analytics
-- health endpoint and Docker Compose-based operation
-
-Simplified/mocked:
-
-- external integrations can run in mock mode
-- local video sources can be enabled for demos
-- AI engine can be disabled by default for lightweight setup
-
-Not exposed:
-
-- proprietary commercial logic
-- customer secrets and real infrastructure details
-- full production hardening specifics
-
-### Architecture
-
-```text
-Frontend (React + Vite + Zustand)
-  -> REST + JWT -> FastAPI Backend
-  -> WebSocket ----^        |
-                            |
-                     PostgreSQL (system of record)
-                            |
-                         Redis (realtime support)
-                            |
-                     Optional AI Detector (YOLO/OpenCV)
-```
-
-### Tech stack
-
-- Backend: Python, FastAPI, SQLAlchemy, Pydantic
-- Data: PostgreSQL, Redis
-- Realtime: WebSocket
-- AI (optional): OpenCV, PyTorch, Ultralytics YOLO
-- Frontend: React, Vite, Zustand, Tailwind CSS
-- Containers: Docker, Docker Compose
-
-### Running locally
-
-1. Prerequisites
-
-- Docker and Docker Compose
-- Node.js 20+ (only if running frontend outside Docker)
-- Python 3.11+ (only if running backend outside Docker)
-
-2. Configure environment
-
-```bash
-cp .env.example .env
-```
-
-3. Start stack
-
-```bash
-docker compose up --build
-```
-
-4. Endpoints
-
-- Frontend: http://localhost:3000
-- API: http://localhost:8000
-- Docs: http://localhost:8000/docs
-
-5. Demo credentials
-
-- username: `admin`
-- password: `admin`
-
-6. Optional smoke test
-
-```bash
-python test_all_endpoints.py
-```
-
-### Frontend-only Vercel deploy (mock mode)
-
-Goal: publish a visual demo with no backend, using seeded fake data and local images.
-
-1. Build and output
-
-- Build Command: `npm run build`
-- Output Directory: `dist`
-
-2. Environment variables (Vercel)
-
-- `VITE_DEMO_MOCK=true`
-- `VITE_API_URL` is optional in mock mode
-
-3. Mock mode behavior
-
-- frontend intercepts REST calls
-- localhost WebSocket is automatically disabled
-- in-memory seeded demo data is loaded
-- demo images are served from `frontend/public/demo`
-
-4. Demo access
-
-- login accepts any username/password (suggestion: `admin` / `admin`)
-
-### Repository structure
-
-```text
-backend/
-  app/
-    api/
-    core/
-    models/
-    schemas/
-frontend/
-  src/
-    components/
-    pages/
-    store/
-database/
-  init.sql
-docker-compose.yml
-```
-
-### Engineering ops assets
-
-- CI: `.github/workflows/ci.yml`
-- Threat model: `docs/threat-model.md`
-- Incident runbook: `docs/runbooks/incident-response.md`
-- License: `LICENSE`
-
-### Usage
-
-This repository is intended for technical demonstration and portfolio review.
-Do not use it in production without proper hardening, threat modeling, and security review.
+- Inglês (canônica): LICENSE
+- Português (referência): LICENSE.pt-BR.md
