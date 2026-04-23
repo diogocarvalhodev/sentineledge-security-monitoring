@@ -1,0 +1,408 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   SENTINELEDGE - AI SECURITY OPERATIONS CENTER
+   Design System v2.0
+   ============================================ */
+
+:root {
+  /* Core Colors - Dark Navy Theme */
+  --sentineledge-dark: #0A1929;
+  --sentineledge-darker: #050B14;
+  --sentineledge-blue: #00E5FF;
+  --sentineledge-blue-glow: rgba(0, 229, 255, 0.25);
+  
+  /* Threat Levels */
+  --threat-safe: #00FF88;
+  --threat-low: #FFB020;
+  --threat-medium: #FF6B35;
+  --threat-high: #FF3D3D;
+  --threat-critical: #FF0055;
+  
+  /* Slate Palette */
+  --slate-50: #F8FAFC;
+  --slate-300: #94A3B8;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+}
+
+@layer base {
+  * {
+    @apply border-slate-700;
+  }
+
+  html {
+    @apply antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    @apply bg-slate-900 text-slate-50 font-sans;
+    @apply overflow-x-hidden;
+    background: linear-gradient(135deg, var(--sentineledge-darker) 0%, var(--sentineledge-dark) 100%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-wide;
+    color: rgba(248, 250, 252, 0.95); /* slate-50 com 95% opacidade */
+  }
+  
+  h1 {
+    @apply text-slate-50;
+    text-shadow: 0 2px 8px rgba(0, 229, 255, 0.2);
+    letter-spacing: 0.05em;
+  }
+  
+  h2 {
+    @apply text-slate-100;
+  }
+  
+  h3, h4, h5, h6 {
+    @apply text-slate-200;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--sentineledge-blue) 0%, var(--sentineledge-dark) 100%);
+    @apply rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--sentineledge-blue);
+    box-shadow: 0 0 10px var(--sentineledge-blue-glow);
+  }
+}
+
+@layer components {
+  /* ============================================
+     SENTINELEDGE COMPONENTS
+     ============================================ */
+  
+  /* Cyber Card with Glow */
+  .sentineledge-card {
+    @apply bg-slate-800/40 backdrop-blur-sm rounded-lg;
+    @apply border border-slate-700/50;
+    @apply transition-all duration-300;
+    position: relative;
+  }
+
+  .sentineledge-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sentineledge-blue), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .sentineledge-card:hover {
+    @apply border-cyan-500/50;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+  }
+
+  .sentineledge-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Threat Level Cards */
+  .card-safe {
+    @apply border-l-4 border-l-green-400;
+    box-shadow: -4px 0 8px rgba(0, 255, 136, 0.2);
+  }
+
+  .card-warning {
+    @apply border-l-4 border-l-amber-400;
+    box-shadow: -4px 0 8px rgba(255, 176, 32, 0.2);
+  }
+
+  .card-danger {
+    @apply border-l-4 border-l-red-500;
+    box-shadow: -4px 0 8px rgba(255, 61, 61, 0.2);
+  }
+
+  .card-critical {
+    @apply border-l-4 border-l-pink-500;
+    box-shadow: -4px 0 8px rgba(255, 0, 85, 0.3);
+    animation: pulse-critical 2s infinite;
+  }
+
+  /* Buttons */
+  .sentineledge-btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+  }
+
+  .sentineledge-btn-primary {
+    @apply bg-cyan-500 text-slate-900;
+    @apply hover:bg-cyan-400 focus:ring-cyan-500;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+  }
+
+  .sentineledge-btn-primary:hover {
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+  }
+
+  .sentineledge-btn-danger {
+    @apply bg-red-500 text-white;
+    @apply hover:bg-red-600 focus:ring-red-500;
+  }
+
+  .sentineledge-btn-secondary {
+    @apply bg-slate-700 text-slate-200;
+    @apply hover:bg-slate-600 focus:ring-slate-500;
+  }
+
+  /* Badges */
+  .sentineledge-badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  .badge-online {
+    @apply bg-green-500/20 text-green-400 border border-green-500/30;
+    animation: pulse-green 2s infinite;
+  }
+
+  .badge-offline {
+    @apply bg-slate-700/50 text-slate-400 border border-slate-600;
+  }
+
+  .badge-alert {
+    @apply bg-red-500/20 text-red-400 border border-red-500/30;
+    animation: pulse-red 1.5s infinite;
+  }
+
+  /* Stat Cards */
+  .stat-card {
+    @apply sentineledge-card p-6;
+    @apply hover:scale-105 transition-transform duration-300;
+  }
+
+  /* Glow Text */
+  .glow-text-cyan {
+    color: var(--sentineledge-blue);
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+  }
+
+  .glow-text-green {
+    color: var(--threat-safe);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  }
+
+  .glow-text-red {
+    color: var(--threat-high);
+    text-shadow: 0 0 10px rgba(255, 61, 61, 0.5);
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Pulse Effects */
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(255, 61, 61, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 20px rgba(255, 61, 61, 0.8); }
+}
+
+@keyframes pulse-critical {
+  0%, 100% { 
+    border-left-color: #FF0055;
+    box-shadow: -4px 0 8px rgba(255, 0, 85, 0.3);
+  }
+  50% { 
+    border-left-color: #FF3D3D;
+    box-shadow: -4px 0 20px rgba(255, 0, 85, 0.6);
+  }
+}
+
+/* Cyber Scan Line */
+@keyframes scan {
+  from {
+    transform: translateY(-100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(300%);
+    opacity: 0;
+  }
+}
+
+.cyber-scan::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--sentineledge-blue), transparent);
+  animation: scan 3s linear infinite;
+}
+
+/* Glow Effect */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 229, 255, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 30px rgba(0, 229, 255, 0.4); }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Slide Animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Animations */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-modalFadeIn {
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+/* Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Number Count Animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-countUp {
+  animation: countUp 0.5s ease-out;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Grid Pattern Background */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Hexagon Pattern Background */
+.hex-pattern {
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Cyber Border */
+.cyber-border {
+  position: relative;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.cyber-border::before,
+.cyber-border::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--sentineledge-blue);
+}
+
+.cyber-border::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.cyber-border::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Monospace for technical data */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: var(--sentineledge-blue);
+  color: var(--sentineledge-darker);
+}

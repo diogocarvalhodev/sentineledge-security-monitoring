@@ -1,0 +1,124 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: sentineledge-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sentineledge}
+      POSTGRES_USER: ${POSTGRES_USER:-sentineledge_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sentineledge_secure_pass_2024}
+      POSTGRES_INITDB_ARGS: "-E UTF8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - sentineledge-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sentineledge_user} -d ${POSTGRES_DB:-sentineledge}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis for real-time communication
+  redis:
+    image: redis:7-alpine
+    container_name: sentineledge-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - sentineledge-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Backend API (FastAPI + AI Engine)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sentineledge-backend
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-sentineledge_user}:${POSTGRES_PASSWORD:-sentineledge_secure_pass_2024}@postgres:5432/${POSTGRES_DB:-sentineledge}
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY?SECRET_KEY is required}
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-480}
+      - BOOTSTRAP_ADMIN_ENABLED=${BOOTSTRAP_ADMIN_ENABLED:-true}
+      - BOOTSTRAP_ADMIN_USERNAME=${BOOTSTRAP_ADMIN_USERNAME:-admin}
+      - BOOTSTRAP_ADMIN_FULL_NAME=${BOOTSTRAP_ADMIN_FULL_NAME:-Administrator}
+      - BOOTSTRAP_ADMIN_EMAIL=${BOOTSTRAP_ADMIN_EMAIL:-admin@sentineledge.local}
+      - BOOTSTRAP_ADMIN_PASSWORD=${BOOTSTRAP_ADMIN_PASSWORD:-admin}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173}
+      - DEBUG=${DEBUG:-false}
+      - DEMO_MODE=${DEMO_MODE:-true}
+      - ALLOW_LOCAL_VIDEO_SOURCES=${ALLOW_LOCAL_VIDEO_SOURCES:-true}
+      - ENABLE_EXTERNAL_INTEGRATIONS=${ENABLE_EXTERNAL_INTEGRATIONS:-false}
+      - AI_ENGINE_ENABLED=${AI_ENGINE_ENABLED:-false}
+      - YOLO_MODEL_PATH=/app/models/yolov3-tiny.weights
+      - YOLO_CONFIG_PATH=/app/models/yolov3-tiny.cfg
+      - COCO_NAMES_PATH=/app/models/coco.names
+      - DETECTION_CONFIDENCE_THRESHOLD=0.5
+      - DETECTION_NMS_THRESHOLD=0.4
+      - MAX_FPS=30
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/models:/app/models
+      - sentineledge_uploads:/app/uploads
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    networks:
+      - sentineledge-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  # Frontend (React + Vite)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sentineledge-frontend
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000}
+      - VITE_APP_NAME=SentinelEdge
+      - VITE_APP_VERSION=2.0.0
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    networks:
+      - sentineledge-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  sentineledge_uploads:
+    driver: local
+
+networks:
+  sentineledge-network:
+    driver: bridge
