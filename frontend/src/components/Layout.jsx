@@ -77,7 +77,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full overflow-x-hidden bg-slate-900">
+    <div className="relative flex h-screen w-full overflow-hidden bg-slate-900">
       {isMobile && sidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/60"
@@ -101,7 +101,7 @@ export default function Layout({ children }) {
         className={`${isMobile
           ? 'fixed inset-y-0 left-0 z-40 w-[85vw] max-w-[320px]'
           : `${sidebarOpen ? 'w-64' : 'w-20'}`
-        } bg-sentineledge-darker border-r border-slate-700/50 text-white transition-all duration-300 flex flex-col relative`}
+        } bg-sentineledge-darker border-r border-slate-700/50 text-white transition-all duration-300 flex flex-col relative overflow-y-auto`}
       >
         {/* Decorative top border */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
@@ -232,7 +232,7 @@ export default function Layout({ children }) {
       )}
 
       {/* Main Content */}
-      <div className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto hex-pattern">
+      <div className="min-w-0 h-full flex-1 overflow-x-hidden overflow-y-auto hex-pattern">
         <div className="p-4 pt-16 sm:p-6 lg:p-8 lg:pt-8">
           <Breadcrumbs />
           {children}
