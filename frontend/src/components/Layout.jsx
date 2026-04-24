@@ -96,9 +96,10 @@ export default function Layout({ children }) {
       )}
 
       {/* Sidebar - Command Panel */}
+      {(!isMobile || sidebarOpen) && (
       <div
         className={`${isMobile
-          ? `fixed inset-y-0 left-0 z-40 w-[85vw] max-w-[320px] transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`
+          ? 'fixed inset-y-0 left-0 z-40 w-[85vw] max-w-[320px]'
           : `${sidebarOpen ? 'w-64' : 'w-20'}`
         } bg-sentineledge-darker border-r border-slate-700/50 text-white transition-all duration-300 flex flex-col relative`}
       >
@@ -228,6 +229,7 @@ export default function Layout({ children }) {
           </button>
         </div>
       </div>
+      )}
 
       {/* Main Content */}
       <div className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto hex-pattern">
