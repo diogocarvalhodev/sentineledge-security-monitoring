@@ -98,7 +98,7 @@ export default function Alerts() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-display font-bold tracking-wider uppercase">
+        <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider uppercase">
           <span className="glow-text-cyan">ALERTAS</span>
         </h1>
         <p className="text-slate-400 mt-2 text-sm uppercase tracking-wide font-display">
@@ -112,7 +112,7 @@ export default function Alerts() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Total de Alertas</p>
-              <p className="text-4xl font-bold text-slate-50 mt-2 font-mono">{stats.total}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-slate-50 mt-2 font-mono">{stats.total}</p>
             </div>
             <div className="p-3 bg-amber-500/20 rounded-lg border border-amber-500/30">
               <AlertTriangle className="text-amber-400" size={28} />
@@ -124,7 +124,7 @@ export default function Alerts() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Pendentes</p>
-              <p className="text-4xl font-bold glow-text-red mt-2 font-mono">{stats.pending}</p>
+              <p className="text-3xl sm:text-4xl font-bold glow-text-red mt-2 font-mono">{stats.pending}</p>
             </div>
             <div className="p-3 bg-red-500/20 rounded-lg border border-red-500/30">
               <XCircle className="text-red-400" size={28} />
@@ -136,7 +136,7 @@ export default function Alerts() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Críticos</p>
-              <p className="text-4xl font-bold glow-text-red mt-2 font-mono">{stats.critical}</p>
+              <p className="text-3xl sm:text-4xl font-bold glow-text-red mt-2 font-mono">{stats.critical}</p>
             </div>
             <div className="p-3 bg-red-500/20 rounded-lg border border-red-500/30">
               <AlertTriangle className="text-red-400" size={28} />
@@ -148,7 +148,7 @@ export default function Alerts() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Com Foto</p>
-              <p className="text-4xl font-bold text-blue-400 mt-2 font-mono">{stats.withPhoto}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-blue-400 mt-2 font-mono">{stats.withPhoto}</p>
             </div>
             <div className="p-3 bg-blue-500/20 rounded-lg border border-blue-500/30">
               <ImageIcon className="text-blue-400" size={28} />
@@ -273,7 +273,7 @@ export default function Alerts() {
                   : 'border-l-4 border-amber-500 card-warning'
               }`}
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 {/* Info */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -313,7 +313,7 @@ export default function Alerts() {
                       <img
                         src={imageUrl}
                         alt="Detecção"
-                        className="rounded-lg border border-cyan-500/30 max-w-md cursor-pointer hover:border-cyan-400/50 hover:shadow-cyan-500/20 transition-all"
+                        className="w-full rounded-lg border border-cyan-500/30 sm:max-w-md cursor-pointer hover:border-cyan-400/50 hover:shadow-cyan-500/20 transition-all"
                         onClick={() => setSelectedImage(imageUrl)}
                         onError={(e) => {
                           e.target.style.display = 'none';
@@ -327,7 +327,7 @@ export default function Alerts() {
                 {!isAcknowledged && (
                   <button
                     onClick={() => handleAcknowledge(alert.id)}
-                    className="flex items-center gap-2 px-4 py-2 bg-cyan-500 text-slate-900 rounded-lg hover:bg-cyan-400 transition-all flex-shrink-0 shadow-glow font-display font-bold uppercase tracking-wider hover:shadow-glow-lg"
+                    className="flex w-full items-center justify-center gap-2 px-4 py-2 bg-cyan-500 text-slate-900 rounded-lg hover:bg-cyan-400 transition-all shadow-glow font-display font-bold uppercase tracking-wider hover:shadow-glow-lg sm:w-auto sm:flex-shrink-0"
                   >
                     <CheckCircle size={18} />
                     Reconhecer

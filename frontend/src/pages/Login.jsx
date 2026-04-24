@@ -68,7 +68,7 @@ export default function Login() {
               </div>
             </div>
             
-            <h1 className="text-4xl font-display font-bold tracking-wider mb-2">
+            <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider mb-2">
               <span className="glow-text-cyan">SENTINEL</span>
             </h1>
             <p className="text-slate-400 text-sm tracking-widest uppercase font-display">

@@ -143,7 +143,7 @@ function MapView() {
     <div className="h-full">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-4xl font-display font-bold tracking-wider uppercase">
+        <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider uppercase">
           <span className="glow-text-cyan">MAPA</span>
         </h1>
         <p className="text-slate-400 mt-2 text-sm uppercase tracking-wide font-display">
@@ -197,7 +197,7 @@ function MapView() {
       {/* Filtros */}
       <div className="sentineledge-card p-4 mb-6">
         <h3 className="font-semibold font-display text-slate-100 mb-3 uppercase tracking-wider">Exibir no mapa:</h3>
-        <div className="flex gap-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
@@ -220,7 +220,7 @@ function MapView() {
       </div>
 
       {/* Map */}
-      <div className="sentineledge-card overflow-hidden" style={{ height: '600px' }}>
+      <div className="sentineledge-card overflow-hidden" style={{ height: 'min(70vh, 600px)' }}>
         {loading ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">

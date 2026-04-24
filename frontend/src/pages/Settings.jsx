@@ -21,7 +21,7 @@ export default function Settings() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-display font-bold tracking-wider uppercase">
+        <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider uppercase">
           <span className="glow-text-cyan">CONFIGURAÇÕES</span>
         </h1>
         <p className="text-slate-400 mt-2 text-sm uppercase tracking-wide font-display">
@@ -31,15 +31,15 @@ export default function Settings() {
 
       {/* Tabs */}
       <div className="sentineledge-card">
-        <div className="border-b border-slate-700/50">
-          <nav className="flex -mb-px">
+        <div className="border-b border-slate-700/50 overflow-x-auto">
+          <nav className="flex min-w-max -mb-px">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-4 border-b-2 font-display font-medium text-sm transition-colors uppercase tracking-wider ${
+                  className={`flex shrink-0 items-center gap-2 px-4 py-3 sm:px-6 sm:py-4 border-b-2 font-display font-medium text-xs sm:text-sm transition-colors uppercase tracking-wider ${
                     activeTab === tab.id
                       ? 'border-cyan-500 text-cyan-400'
                       : 'border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-600'
@@ -54,7 +54,7 @@ export default function Settings() {
         </div>
 
         {/* Tab Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {activeTab === 'cameras' && <CamerasTab />}
           {activeTab === 'zones' && <ZonesTab />}
           {activeTab === 'telegram' && <TelegramTab />}

@@ -202,7 +202,7 @@ export default function Dashboard() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-display font-bold tracking-wider uppercase">
+        <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider uppercase">
           <span className="glow-text-cyan">DASHBOARD</span>
         </h1>
         <p className="text-slate-400 mt-2 text-sm uppercase tracking-wide font-display">

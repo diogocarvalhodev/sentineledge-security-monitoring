@@ -23,6 +23,7 @@ export default function Layout({ children }) {
   const navigate = useNavigate();
   const { user, logout } = useStore();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [logoUrl, setLogoUrl] = useState(null);
   
   // Hook de notificações em tempo real
@@ -40,6 +41,19 @@ export default function Layout({ children }) {
       .catch(err => console.error('Erro ao carregar logo:', err));
   }, []);
 
+  useEffect(() => {
+    const updateViewport = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      setSidebarOpen(!mobile);
+    };
+
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
+
   const menuItems = [
     { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/cameras', icon: Camera, label: 'Câmeras' },
@@ -55,11 +69,29 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="flex h-screen bg-slate-900">
+    <div className="relative flex min-h-screen bg-slate-900">
+      {isMobile && sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {isMobile && (
+        <button
+          onClick={() => setSidebarOpen((prev) => !prev)}
+          className="fixed left-4 top-4 z-40 rounded-lg border border-cyan-500/30 bg-slate-900/90 p-2 text-cyan-400 shadow-glow"
+          aria-label="Alternar menu"
+        >
+          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      )}
+
       {/* Sidebar - Command Panel */}
       <div
-        className={`${
-          sidebarOpen ? 'w-64' : 'w-20'
+        className={`${isMobile
+          ? `fixed inset-y-0 left-0 z-40 w-72 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`
+          : `${sidebarOpen ? 'w-64' : 'w-20'}`
         } bg-sentineledge-darker border-r border-slate-700/50 text-white transition-all duration-300 flex flex-col relative`}
       >
         {/* Decorative top border */}
@@ -67,7 +99,7 @@ export default function Layout({ children }) {
         
         {/* Header */}
         <div className="p-4 flex items-center justify-between border-b border-slate-700/50">
-          {sidebarOpen && (
+          {(sidebarOpen || isMobile) && (
             <div className="flex items-center gap-3">
               {/* Logo Hexagon */}
               <div className="relative w-10 h-10">
@@ -90,7 +122,7 @@ export default function Layout({ children }) {
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-slate-800 rounded transition-colors"
+            className={`p-2 hover:bg-slate-800 rounded transition-colors ${isMobile ? 'hidden' : ''}`}
           >
             {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -111,6 +143,11 @@ export default function Layout({ children }) {
                 <li key={item.path}>
                   <Link
                     to={item.path}
+                    onClick={() => {
+                      if (isMobile) {
+                        setSidebarOpen(false);
+                      }
+                    }}
                     className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 relative group ${
                       isActive
                         ? 'bg-slate-800/50 text-cyan-400 border-l-2 border-cyan-500'
@@ -121,7 +158,7 @@ export default function Layout({ children }) {
                       <div className="absolute inset-0 bg-cyan-500/5 rounded-lg"></div>
                     )}
                     <Icon size={20} className={isActive ? 'text-cyan-400' : ''} />
-                    {sidebarOpen && (
+                    {(sidebarOpen || isMobile) && (
                       <span className="font-display text-sm tracking-wide uppercase">
                         {item.label}
                       </span>
@@ -144,7 +181,7 @@ export default function Layout({ children }) {
         {/* User Info & Status */}
         <div className="p-4">
           {/* Connection Status */}
-          <div className={`flex items-center gap-2 mb-4 ${sidebarOpen ? '' : 'justify-center'}`}>
+          <div className={`flex items-center gap-2 mb-4 ${sidebarOpen || isMobile ? '' : 'justify-center'}`}>
             <div className={`relative w-2 h-2 rounded-full ${
               isConnected ? 'bg-green-400' : 'bg-red-500'
             }`}>
@@ -152,7 +189,7 @@ export default function Layout({ children }) {
                 <div className="absolute inset-0 bg-green-400 rounded-full animate-ping"></div>
               )}
             </div>
-            {sidebarOpen && (
+            {(sidebarOpen || isMobile) && (
               <span className={`text-xs font-display tracking-wider uppercase ${
                 isConnected ? 'text-green-400' : 'text-red-400'
               }`}>
@@ -162,7 +199,7 @@ export default function Layout({ children }) {
           </div>
 
           {/* User */}
-          {user && sidebarOpen && (
+          {user && (sidebarOpen || isMobile) && (
             <div className="mb-3 p-2 bg-slate-800/30 rounded-lg border border-slate-700/50">
               <p className="text-sm font-display font-semibold tracking-wide uppercase text-cyan-400">
                 {user.username}
@@ -174,10 +211,10 @@ export default function Layout({ children }) {
           {/* Logout */}
           <button
             onClick={handleLogout}
-            className={`w-full flex items-center ${sidebarOpen ? 'gap-3' : 'justify-center'} px-3 py-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/50 rounded-lg transition-all duration-200 border border-transparent hover:border-red-500/30`}
+            className={`w-full flex items-center ${sidebarOpen || isMobile ? 'gap-3' : 'justify-center'} px-3 py-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/50 rounded-lg transition-all duration-200 border border-transparent hover:border-red-500/30`}
           >
             <LogOut size={18} />
-            {sidebarOpen && (
+            {(sidebarOpen || isMobile) && (
               <span className="font-display text-sm tracking-wide uppercase">Sair</span>
             )}
           </button>
@@ -186,7 +223,7 @@ export default function Layout({ children }) {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto hex-pattern">
-        <div className="p-8">
+        <div className="p-4 pt-16 sm:p-6 lg:p-8 lg:pt-8">
           <Breadcrumbs />
           {children}
         </div>

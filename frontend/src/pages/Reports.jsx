@@ -312,7 +312,7 @@ export default function Reports() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-display font-bold tracking-wider uppercase">
+        <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider uppercase">
           <span className="glow-text-cyan">RELATÓRIOS</span>
         </h1>
         <p className="text-slate-400 mt-2 text-sm uppercase tracking-wide font-display">
@@ -374,7 +374,7 @@ export default function Reports() {
           )}
 
           {/* Zona */}
-          <div>
+          <div className={dateRange === 'custom' ? 'md:col-span-2' : ''}>
             <label className="block text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">
               Zona
             </label>
@@ -394,17 +394,17 @@ export default function Reports() {
         </div>
 
         {/* Botões de Exportação */}
-        <div className="flex gap-3 mt-4">
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap">
           <button
             onClick={exportPDF}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500/80 text-white rounded-lg hover:bg-red-600 transition-all shadow-glow font-display uppercase tracking-wider text-sm font-semibold"
+            className="flex w-full items-center justify-center gap-2 px-4 py-2 bg-red-500/80 text-white rounded-lg hover:bg-red-600 transition-all shadow-glow font-display uppercase tracking-wider text-sm font-semibold sm:w-auto"
           >
             <FileDown size={18} />
             Exportar PDF
           </button>
           <button
             onClick={exportExcel}
-            className="flex items-center gap-2 px-4 py-2 bg-green-500/80 text-white rounded-lg hover:bg-green-600 transition-all shadow-glow font-display uppercase tracking-wider text-sm font-semibold"
+            className="flex w-full items-center justify-center gap-2 px-4 py-2 bg-green-500/80 text-white rounded-lg hover:bg-green-600 transition-all shadow-glow font-display uppercase tracking-wider text-sm font-semibold sm:w-auto"
           >
             <Download size={18} />
             Exportar Excel
@@ -413,12 +413,12 @@ export default function Reports() {
       </div>
 
       {/* Cards de Estatísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
         <div className="sentineledge-card p-6 stat-card">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Total de Alertas</p>
-              <p className="text-4xl font-bold text-slate-50 mt-2 font-mono">{stats.total}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-slate-50 mt-2 font-mono">{stats.total}</p>
             </div>
             <div className="p-3 bg-blue-500/20 rounded-lg border border-blue-500/30">
               <AlertTriangle className="text-blue-400" size={28} />
@@ -430,7 +430,7 @@ export default function Reports() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Alertas Críticos</p>
-              <p className="text-4xl font-bold glow-text-red mt-2 font-mono">{stats.critical}</p>
+              <p className="text-3xl sm:text-4xl font-bold glow-text-red mt-2 font-mono">{stats.critical}</p>
             </div>
             <div className="p-3 bg-red-500/20 rounded-lg border border-red-500/30">
               <AlertTriangle className="text-red-400" size={28} />
@@ -442,7 +442,7 @@ export default function Reports() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Reconhecidos</p>
-              <p className="text-4xl font-bold glow-text-green mt-2 font-mono">{stats.acknowledged}</p>
+              <p className="text-3xl sm:text-4xl font-bold glow-text-green mt-2 font-mono">{stats.acknowledged}</p>
             </div>
             <div className="p-3 bg-green-500/20 rounded-lg border border-green-500/30">
               <BarChart3 className="text-green-400" size={28} />
@@ -454,7 +454,7 @@ export default function Reports() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Média de Pessoas</p>
-              <p className="text-4xl font-bold text-amber-400 mt-2 font-mono">{stats.avgPeople}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-amber-400 mt-2 font-mono">{stats.avgPeople}</p>
             </div>
             <div className="p-3 bg-amber-500/20 rounded-lg border border-amber-500/30">
               <TrendingUp className="text-amber-400" size={28} />

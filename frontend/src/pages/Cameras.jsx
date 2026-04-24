@@ -99,9 +99,9 @@ export default function Cameras() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="text-4xl font-display font-bold tracking-wider uppercase">
+            <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-wider uppercase">
               <span className="glow-text-cyan">CÂMERAS</span>
             </h1>
             <p className="text-slate-400 mt-2 text-sm uppercase tracking-wide font-display">
@@ -110,10 +110,10 @@ export default function Cameras() {
           </div>
           
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-slate-800 rounded-lg p-1">
+          <div className="grid w-full grid-cols-1 gap-2 bg-slate-800 rounded-lg p-2 sm:w-auto sm:grid-cols-2 sm:gap-1 sm:p-1">
             <button
               onClick={() => setViewMode('cards')}
-              className={`flex items-center gap-2 px-4 py-2 rounded font-medium text-sm transition-all font-display uppercase tracking-wider ${
+              className={`flex items-center justify-center gap-2 px-4 py-2 rounded font-medium text-sm transition-all font-display uppercase tracking-wider ${
                 viewMode === 'cards'
                   ? 'bg-cyan-500 text-slate-900 shadow-glow'
                   : 'text-slate-400 hover:text-white'
@@ -124,7 +124,7 @@ export default function Cameras() {
             </button>
             <button
               onClick={() => setViewMode('feeds')}
-              className={`flex items-center gap-2 px-4 py-2 rounded font-medium text-sm transition-all font-display uppercase tracking-wider ${
+              className={`flex items-center justify-center gap-2 px-4 py-2 rounded font-medium text-sm transition-all font-display uppercase tracking-wider ${
                 viewMode === 'feeds'
                   ? 'bg-cyan-500 text-slate-900 shadow-glow'
                   : 'text-slate-400 hover:text-white'
@@ -138,12 +138,12 @@ export default function Cameras() {
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
         <div className="sentineledge-card p-6 stat-card">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Total de Câmeras</p>
-              <p className="text-4xl font-bold text-slate-50 mt-2 font-mono">{stats.total}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-slate-50 mt-2 font-mono">{stats.total}</p>
             </div>
             <div className="p-3 bg-blue-500/20 rounded-lg border border-blue-500/30">
               <Camera className="text-blue-400" size={28} />
@@ -155,7 +155,7 @@ export default function Cameras() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Online</p>
-              <p className="text-4xl font-bold glow-text-green mt-2 font-mono">{stats.online}</p>
+              <p className="text-3xl sm:text-4xl font-bold glow-text-green mt-2 font-mono">{stats.online}</p>
             </div>
             <div className="p-3 bg-green-500/20 rounded-lg border border-green-500/30">
               <CheckCircle className="text-green-400" size={28} />
@@ -167,7 +167,7 @@ export default function Cameras() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Offline</p>
-              <p className="text-4xl font-bold glow-text-red mt-2 font-mono">{stats.offline}</p>
+              <p className="text-3xl sm:text-4xl font-bold glow-text-red mt-2 font-mono">{stats.offline}</p>
             </div>
             <div className="p-3 bg-red-500/20 rounded-lg border border-red-500/30">
               <AlertCircle className="text-red-400" size={28} />
@@ -179,7 +179,7 @@ export default function Cameras() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-display font-semibold text-slate-400 uppercase tracking-wider mb-2">Com Zona</p>
-              <p className="text-4xl font-bold text-purple-400 mt-2 font-mono">{stats.withZone}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-purple-400 mt-2 font-mono">{stats.withZone}</p>
             </div>
             <div className="p-3 bg-purple-500/20 rounded-lg border border-purple-500/30">
               <MapPin className="text-purple-400" size={28} />
@@ -190,7 +190,7 @@ export default function Cameras() {
 
       {/* Filters */}
       <div className="sentineledge-card p-6 mb-8">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
           <div className="flex items-center gap-2">
             <Filter size={20} className="text-cyan-400" />
             <h2 className="text-lg font-display font-bold text-slate-100 uppercase tracking-wider">Filtros</h2>
@@ -198,7 +198,7 @@ export default function Cameras() {
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 font-medium uppercase tracking-wider font-display"
+              className="inline-flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 font-medium uppercase tracking-wider font-display"
             >
               <X size={16} />
               Limpar filtros
@@ -264,7 +264,7 @@ export default function Cameras() {
       {/* Camera Cards or Feeds */}
       {viewMode === 'cards' ? (
         /* Camera Cards View */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredCameras.map(camera => (
             <div 
               key={camera.id} 
@@ -276,16 +276,16 @@ export default function Cameras() {
               
               <div className="p-6">
                 {/* Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
+                <div className="flex items-start justify-between mb-4 gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
                     <div className={`w-12 h-12 ${camera.status === 'online' ? 'bg-green-500/20 border border-green-500/30' : 'bg-slate-700/50 border border-slate-600'} rounded-lg flex items-center justify-center`}>
                       <Camera className={camera.status === 'online' ? 'text-green-400' : 'text-slate-500'} size={24} />
                     </div>
                     <div>
-                      <h3 className="font-semibold font-display text-slate-100 text-lg uppercase tracking-wide">{camera.name}</h3>
+                      <h3 className="font-semibold font-display text-slate-100 text-base sm:text-lg uppercase tracking-wide truncate">{camera.name}</h3>
                       <div className="flex items-center gap-1 text-sm text-slate-400 mt-1">
                         <MapPin size={14} className="text-cyan-400" />
-                        <span>{camera.location}</span>
+                        <span className="truncate">{camera.location}</span>
                       </div>
                     </div>
                   </div>
@@ -337,7 +337,7 @@ export default function Cameras() {
                 </div>
 
                 {/* Status Badge */}
-                <div className="flex items-center justify-between pt-4 border-t border-slate-700/50">
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-700/50 sm:flex-row sm:items-center sm:justify-between">
                   <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider font-display ${
                     camera.status === 'online' 
                       ? 'badge-online' 
@@ -359,7 +359,7 @@ export default function Cameras() {
                   )}
                   
                   {/* Click hint */}
-                  <div className="flex items-center gap-1 text-xs text-cyan-400 opacity-70">
+                  <div className="flex items-center gap-1 text-xs text-cyan-400 opacity-70 sm:self-auto self-end">
                     <Eye size={12} />
                     Clique para ver
                   </div>
