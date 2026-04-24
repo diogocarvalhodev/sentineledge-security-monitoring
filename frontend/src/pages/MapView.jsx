@@ -265,7 +265,7 @@ function MapView() {
                 icon={zoneIcon}
               >
                 <Popup>
-                  <div className="p-2 min-w-[250px] bg-slate-900 border border-slate-700">
+                  <div className="w-[220px] max-w-[70vw] sm:w-[250px] p-2 bg-slate-900 border border-slate-700">
                     <div className="flex items-start gap-2 mb-3">
                       <Building2 size={24} className="text-cyan-400 mt-1" />
                       <div>
@@ -314,7 +314,7 @@ function MapView() {
                 icon={getCameraIcon(camera)}
               >
                 <Popup>
-                  <div className="p-2 min-w-[220px] bg-slate-900 border border-slate-700">
+                  <div className="w-[200px] max-w-[70vw] sm:w-[220px] p-2 bg-slate-900 border border-slate-700">
                     <div className="flex items-start gap-2 mb-2">
                       <Camera size={20} className="text-cyan-400 mt-1" />
                       <div>

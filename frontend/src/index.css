@@ -39,12 +39,20 @@
   html {
     @apply antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    width: 100%;
+    max-width: 100%;
   }
 
   body {
     @apply bg-slate-900 text-slate-50 font-sans;
-    @apply overflow-x-hidden;
+    overflow-x: auto;
     background: linear-gradient(135deg, var(--sentineledge-darker) 0%, var(--sentineledge-dark) 100%);
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {

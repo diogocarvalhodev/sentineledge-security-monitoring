@@ -22,8 +22,12 @@ export default function Layout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useStore();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const getIsMobile = () => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth < 1024;
+  };
+  const [isMobile, setIsMobile] = useState(getIsMobile);
+  const [sidebarOpen, setSidebarOpen] = useState(() => !getIsMobile());
   const [logoUrl, setLogoUrl] = useState(null);
   
   // Hook de notificações em tempo real
@@ -44,8 +48,12 @@ export default function Layout({ children }) {
   useEffect(() => {
     const updateViewport = () => {
       const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
-      setSidebarOpen(!mobile);
+      setIsMobile((prev) => {
+        if (prev !== mobile) {
+          setSidebarOpen(!mobile);
+        }
+        return mobile;
+      });
     };
 
     updateViewport();
@@ -69,7 +77,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="relative flex min-h-screen bg-slate-900">
+    <div className="relative flex min-h-screen w-full bg-slate-900">
       {isMobile && sidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/60"
@@ -80,7 +88,7 @@ export default function Layout({ children }) {
       {isMobile && (
         <button
           onClick={() => setSidebarOpen((prev) => !prev)}
-          className="fixed left-4 top-4 z-40 rounded-lg border border-cyan-500/30 bg-slate-900/90 p-2 text-cyan-400 shadow-glow"
+          className="fixed left-3 top-3 z-40 rounded-lg border border-cyan-500/30 bg-slate-900/90 p-2 text-cyan-400 shadow-glow sm:left-4 sm:top-4"
           aria-label="Alternar menu"
         >
           {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
@@ -90,7 +98,7 @@ export default function Layout({ children }) {
       {/* Sidebar - Command Panel */}
       <div
         className={`${isMobile
-          ? `fixed inset-y-0 left-0 z-40 w-72 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`
+          ? `fixed inset-y-0 left-0 z-40 w-[85vw] max-w-[320px] transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`
           : `${sidebarOpen ? 'w-64' : 'w-20'}`
         } bg-sentineledge-darker border-r border-slate-700/50 text-white transition-all duration-300 flex flex-col relative`}
       >
@@ -222,7 +230,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto hex-pattern">
+      <div className="min-w-0 flex-1 overflow-auto hex-pattern">
         <div className="p-4 pt-16 sm:p-6 lg:p-8 lg:pt-8">
           <Breadcrumbs />
           {children}
