@@ -41,11 +41,12 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     width: 100%;
     max-width: 100%;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-slate-900 text-slate-50 font-sans;
-    overflow-x: auto;
+    overflow-x: hidden;
     background: linear-gradient(135deg, var(--sentineledge-darker) 0%, var(--sentineledge-dark) 100%);
   }
 
@@ -53,6 +54,7 @@
     width: 100%;
     max-width: 100%;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {

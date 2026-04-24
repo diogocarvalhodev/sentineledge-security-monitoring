@@ -77,7 +77,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full bg-slate-900">
+    <div className="relative flex min-h-screen w-full overflow-x-hidden bg-slate-900">
       {isMobile && sidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/60"
@@ -230,7 +230,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Main Content */}
-      <div className="min-w-0 flex-1 overflow-auto hex-pattern">
+      <div className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto hex-pattern">
         <div className="p-4 pt-16 sm:p-6 lg:p-8 lg:pt-8">
           <Breadcrumbs />
           {children}
