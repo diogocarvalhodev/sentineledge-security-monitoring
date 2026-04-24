@@ -576,8 +576,8 @@ export default function Dashboard() {
                         : 'border-amber-500/50 bg-amber-950/20 card-warning'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-3">
                           <span className="font-semibold text-slate-100 text-lg font-display uppercase tracking-wide">
                             {alert.camera?.name || `Câmera #${alert.camera_id}`}
@@ -610,17 +610,17 @@ export default function Dashboard() {
                         </div>
 
                         {alert.notes && (
-                          <p className="text-sm text-slate-300 mb-3 italic bg-slate-900/40 p-2 rounded border border-slate-700/50">
+                          <p className="text-sm text-slate-300 mb-3 italic bg-slate-900/40 p-2 rounded border border-slate-700/50 max-w-2xl mx-auto text-center">
                             📝 {alert.notes}
                           </p>
                         )}
                         
                         {imageUrl && (
-                          <div className="mt-3">
+                          <div className="mt-3 flex justify-center">
                             <img
                               src={imageUrl}
                               alt={`Alerta #${alert.id} - ${alert.camera?.name || 'Câmera'}`}
-                              className="rounded-lg border border-cyan-500/30 max-w-full h-auto max-h-64 object-contain shadow-lg hover:shadow-cyan-500/20 transition-all cursor-pointer hover:border-cyan-400/50"
+                              className="mx-auto rounded-lg border border-cyan-500/30 max-w-full h-auto max-h-64 object-contain shadow-lg hover:shadow-cyan-500/20 transition-all cursor-pointer hover:border-cyan-400/50"
                               onClick={() => setSelectedImage(imageUrl)}
                               onError={(e) => {
                                 console.error('Erro ao carregar imagem:', e.target.src);
@@ -633,7 +633,7 @@ export default function Dashboard() {
                       {!isAcknowledged && (
                         <button
                           onClick={() => handleAcknowledgeClick(alert.id)}
-                          className="px-4 py-2 bg-cyan-500 text-slate-900 text-sm font-bold rounded-lg hover:bg-cyan-400 transition-all flex-shrink-0 shadow-glow uppercase tracking-wider font-display hover:shadow-glow-lg"
+                          className="w-full md:w-auto px-4 py-2 bg-cyan-500 text-slate-900 text-sm font-bold rounded-lg hover:bg-cyan-400 transition-all flex-shrink-0 shadow-glow uppercase tracking-wider font-display hover:shadow-glow-lg"
                         >
                           Reconhecer
                         </button>
